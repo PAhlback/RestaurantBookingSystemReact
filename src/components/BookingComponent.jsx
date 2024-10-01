@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import SelectDateComponent from './SelectDateComponent';
 import SelectTimeComponent from './SelectTimeComponent';
@@ -6,6 +7,9 @@ import SelectNumberOfGuestsComponent from './SelectNumberOfGuestsComponent';
 import EnterContactInformationComponent from './EnterContactInformationComponent';
 
 const BookingComponent = () => {
+  const navigate = useNavigate();
+  const [allFieldsEntered, setAllFieldsEntered] = useState(false);
+
   // DATE
   const [selectedDate, setSelectedDate] = useState(null);
   const [isDateSelected, setIsDateSelected] = useState(false);
@@ -53,9 +57,33 @@ const BookingComponent = () => {
 
     const formattedPhoneNumber = phoneNumber.trim() === '' ? null : phoneNumber;
     setCustomerPhoneNumber(formattedPhoneNumber);
-    
+
     console.log(`BookingComponent: Contact set to ${name}, ${email}, ${phoneNumber}`);
-  }
+    setAllFieldsEntered(true);
+  };
+
+  useEffect(() => {
+    if (allFieldsEntered) {
+      const combinedDateTime = new Date(selectedDate);
+      const [hours, minutes] = selectedTimeSlot.split(':')
+
+      combinedDateTime.setHours(parseInt(hours, 10));
+      combinedDateTime.setMinutes(parseInt(minutes, 10));
+
+      console.log("BookingComponent combinedDateTime: ", combinedDateTime);
+      console.log(numberOfGuests, customerEmail, customerName, customerPhoneNumber);
+
+      navigate('/reservation', {
+        state: {
+          numberOfGuests: numberOfGuests,
+          dateAndTime: combinedDateTime,
+          customerEmail: customerEmail,
+          customerName: customerName,
+          customerPhone: customerPhoneNumber
+        }
+      });
+    }
+  }, [allFieldsEntered])
 
   return (
     <>
@@ -72,17 +100,18 @@ const BookingComponent = () => {
           <SelectDateComponent handleSelectDate={handleSelectDate} />
         )}
         {isDateSelected && !isTimeSelected && (
-          <SelectTimeComponent openingTime={openingTime} closingTime={closingTime} interval={timeSlotInterval} handleSelectTime={handleSelectTime}/>
+          <SelectTimeComponent openingTime={openingTime} closingTime={closingTime} interval={timeSlotInterval} handleSelectTime={handleSelectTime} />
         )}
         {isTimeSelected && !isGuestsSelected && (
-          <SelectNumberOfGuestsComponent handleSelectNumberOfGuests={handleSelectNumberOfGuests}/>
+          <SelectNumberOfGuestsComponent handleSelectNumberOfGuests={handleSelectNumberOfGuests} />
         )}
         {isGuestsSelected && !customerName && !customerEmail && (
-          <EnterContactInformationComponent handleContactInfo={handleContactInfo}/>
+          <EnterContactInformationComponent handleContactInfo={handleContactInfo} />
         )}
       </section>
     </>
   )
 }
+
 
 export default BookingComponent
