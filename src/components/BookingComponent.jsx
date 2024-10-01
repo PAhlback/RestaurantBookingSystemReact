@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import Calendar from 'react-calendar';
-
 
 import SelectDateComponent from './SelectDateComponent';
 import SelectTimeComponent from './SelectTimeComponent';
 import SelectNumberOfGuestsComponent from './SelectNumberOfGuestsComponent';
+import EnterContactInformationComponent from './EnterContactInformationComponent';
 
 const BookingComponent = () => {
   // DATE
@@ -25,6 +24,11 @@ const BookingComponent = () => {
   const [numberOfGuests, setNumberOfGuests] = useState(0);
   const [isGuestsSelected, setIsGuestsSelected] = useState(false);
 
+  // CONTACT INFO
+  const [customerName, setCustomerName] = useState('');
+  const [customerEmail, setCustomerEmail] = useState('');
+  const [customerPhoneNumber, setCustomerPhoneNumber] = useState('');
+
   const handleSelectDate = (date) => {
     setSelectedDate(date);
     setIsDateSelected(true);
@@ -41,6 +45,16 @@ const BookingComponent = () => {
     setNumberOfGuests(guests);
     setIsGuestsSelected(true);
     console.log("BookingComponent: Number of guests set to ", guests);
+  }
+
+  const handleContactInfo = ({ name, email, phoneNumber }) => {
+    setCustomerName(name);
+    setCustomerEmail(email);
+
+    const formattedPhoneNumber = phoneNumber.trim() === '' ? null : phoneNumber;
+    setCustomerPhoneNumber(formattedPhoneNumber);
+    
+    console.log(`BookingComponent: Contact set to ${name}, ${email}, ${phoneNumber}`);
   }
 
   return (
@@ -62,6 +76,9 @@ const BookingComponent = () => {
         )}
         {isTimeSelected && !isGuestsSelected && (
           <SelectNumberOfGuestsComponent handleSelectNumberOfGuests={handleSelectNumberOfGuests}/>
+        )}
+        {isGuestsSelected && !customerName && !customerEmail && (
+          <EnterContactInformationComponent handleContactInfo={handleContactInfo}/>
         )}
       </section>
     </>
