@@ -13,3 +13,29 @@ button {
 .bi {
   font-size: large;
 }
+
+.time-slot-picker {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.time-slot-btn {
+  width: 50px;
+  height: 50px;
+  margin: 5px;
+  background-color: #007bff; /* Button color */
+  color: white;
+  border: none;
+  border-radius: 5px; /* Square corners */
+  cursor: pointer;
+}
+
+.time-slot-btn:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+
+.time-slot-btn.selected {
+  background-color: #28a745; /* Green color for selected time */
+  color: white;
+  font-weight: bold;
+}
