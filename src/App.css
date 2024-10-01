@@ -1,0 +1,15 @@
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  margin: 0.5rem;
+  border-radius: 8px;
+}
+
+.bi {
+  font-size: large;
+}
