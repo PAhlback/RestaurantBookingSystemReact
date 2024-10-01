@@ -49,7 +49,7 @@ const BookingComponent = () => {
       <h2>Reserve Table</h2>
       <section className='booking-wrapper'>
         <nav>
-          <button className='btn btn-outline-primary'><i className="bi bi-calendar3"></i></button>
+          <button className='btn btn-outline-primary btn-sm'><i className="bi bi-calendar3"></i></button>
           <button className='btn btn-outline-primary btn-sm' disabled={!isDateSelected}><i className="bi bi-clock"></i></button>
           <button className='btn btn-outline-primary btn-sm' disabled={!isTimeSelected}><i className="bi bi-people"></i></button>
           <button className='btn btn-outline-primary btn-sm' disabled={!isGuestsSelected}><i className="bi bi-person-vcard"></i></button>

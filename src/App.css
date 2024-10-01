@@ -23,19 +23,19 @@ button {
   width: 50px;
   height: 50px;
   margin: 5px;
-  background-color: #007bff; /* Button color */
+  background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 5px; /* Square corners */
+  border-radius: 5px;
   cursor: pointer;
 }
 
 .time-slot-btn:hover {
-  background-color: #0056b3; /* Darker shade on hover */
+  background-color: #0056b3;
 }
 
 .time-slot-btn.selected {
-  background-color: #28a745; /* Green color for selected time */
+  background-color: #28a745;
   color: white;
   font-weight: bold;
 }
