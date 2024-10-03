@@ -4,7 +4,7 @@ const SelectNumberOfGuestsComponent = ({ handleSelectNumberOfGuests }) => {
     const [numberOfGuests, setNumberOfGuests] = useState(0);
 
     const NumberOfGuestsPicker = () => {
-        const possibleNumberOfGuests = [1, 2, 3, 4, 5, 6, 7, 8]
+        const possibleNumberOfGuests = [1, 2, 3, 4, 5, 6]
 
         return (
             <div className='time-slot-picker'>

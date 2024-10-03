@@ -13,9 +13,6 @@ const BookingComponent = () => {
   // DATE
   const [selectedDate, setSelectedDate] = useState(null);
   const [isDateSelected, setIsDateSelected] = useState(false);
-  // useEffect(() => {
-  //     console.log("useEffect on selectedDate ", selectedDate)
-  // }, [selectedDate])
 
   // TIME
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
@@ -70,6 +67,18 @@ const BookingComponent = () => {
       combinedDateTime.setHours(parseInt(hours, 10));
       combinedDateTime.setMinutes(parseInt(minutes, 10));
 
+      const swedishTime = new Intl.DateTimeFormat('sv-SE', {
+        timeZone: 'Europe/Stockholm',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      }).formatToParts(combinedDateTime);
+    
+      console.log("BookingComponent combinedDateTime (Swedish time): ", swedishTime);
+
       console.log("BookingComponent combinedDateTime: ", combinedDateTime);
       console.log(numberOfGuests, customerEmail, customerName, customerPhoneNumber);
 
@@ -92,20 +101,26 @@ const BookingComponent = () => {
       <section className='booking-wrapper'>
         <nav>
           <button className='btn btn-outline-primary btn-sm'><i className="bi bi-calendar3"></i></button>
-          <button className='btn btn-outline-primary btn-sm' disabled={!isDateSelected}><i className="bi bi-clock"></i></button>
-          <button className='btn btn-outline-primary btn-sm' disabled={!isTimeSelected}><i className="bi bi-people"></i></button>
+          <button className='btn btn-outline-primary btn-sm' disabled={!isDateSelected}><i className="bi bi-people"></i></button>
+          <button className='btn btn-outline-primary btn-sm' disabled={!isTimeSelected}><i className="bi bi-clock"></i></button>
           <button className='btn btn-outline-primary btn-sm' disabled={!isGuestsSelected}><i className="bi bi-person-vcard"></i></button>
         </nav>
         {!isDateSelected && (
           <SelectDateComponent handleSelectDate={handleSelectDate} />
         )}
-        {isDateSelected && !isTimeSelected && (
-          <SelectTimeComponent openingTime={openingTime} closingTime={closingTime} interval={timeSlotInterval} handleSelectTime={handleSelectTime} />
-        )}
-        {isTimeSelected && !isGuestsSelected && (
+        {isDateSelected && !isGuestsSelected && (
           <SelectNumberOfGuestsComponent handleSelectNumberOfGuests={handleSelectNumberOfGuests} />
         )}
-        {isGuestsSelected && !customerName && !customerEmail && (
+        {isGuestsSelected && !isTimeSelected && (
+          <SelectTimeComponent 
+            openingTime={openingTime} 
+            closingTime={closingTime} 
+            interval={timeSlotInterval} 
+            numberOfGuests={numberOfGuests} 
+            selectedDate={selectedDate}
+            handleSelectTime={handleSelectTime} />
+        )}
+        {isTimeSelected && !customerName && !customerEmail && (
           <EnterContactInformationComponent handleContactInfo={handleContactInfo} />
         )}
       </section>
